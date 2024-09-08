@@ -17,9 +17,9 @@ export class UsersController {
   public constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  public create(@Body() user: { username: string; password: string }): Promise<User> {
+  public create(@Body() user: { email: string; password: string }): Promise<User> {
     try {
-      return this.usersService.create(user.username, user.password);
+      return this.usersService.create(user.email, user.password);
     } catch (error) {
       throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
     }

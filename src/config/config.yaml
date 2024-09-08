@@ -1,8 +1,0 @@
-http:
-  host: "localhost"
-  port: 4000
-db:
-  sqlite:
-    database: "db.sqlite"
-jwt:
-  secret: "aTeREwhivEnt"

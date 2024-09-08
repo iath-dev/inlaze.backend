@@ -8,9 +8,9 @@ import * as bcrypt from "bcryptjs";
 export class UsersService {
   public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
-  public async create(username: string, password: string): Promise<User> {
+  public async create(email: string, password: string): Promise<User> {
     const _password = await bcrypt.hash(password, 10);
-    const newUser = this.usersRepository.create({ username, password: _password });
+    const newUser = this.usersRepository.create({ email, password: _password });
     return this.usersRepository.save(newUser);
   }
 
@@ -19,7 +19,14 @@ export class UsersService {
   }
 
   public async findOne(id: number): Promise<User> {
-    const user = await this.usersRepository.findOneBy({ id });
+    const user = await this.usersRepository.findOneBy({ id, isActive: true });
+
+    if (!user) throw new HttpException("NotFound", HttpStatus.NOT_FOUND);
+
+    return user;
+  }
+  public async findByEmail(email: string): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ email });
 
     if (!user) throw new HttpException("NotFound", HttpStatus.NOT_FOUND);
 

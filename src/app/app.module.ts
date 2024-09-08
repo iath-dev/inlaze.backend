@@ -5,7 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "../users/users.module";
 import { User } from "../users/user.entity";
 import { ConfigModule } from "@nestjs/config";
-import config from "src/config/config";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
   imports: [
@@ -16,8 +16,8 @@ import config from "src/config/config";
       synchronize: true,
     }),
     UsersModule,
+    AuthModule,
     ConfigModule.forRoot({
-      load: [config],
       isGlobal: true,
     }),
   ],
