@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+} from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { User } from "./user.entity";
 
@@ -8,26 +18,46 @@ export class UsersController {
 
   @Post()
   public create(@Body() user: { username: string; password: string }): Promise<User> {
-    return this.usersService.create(user.username, user.password);
+    try {
+      return this.usersService.create(user.username, user.password);
+    } catch (error) {
+      throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+    }
   }
 
   @Get()
   public findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+    try {
+      return this.usersService.findAll();
+    } catch (error) {
+      throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+    }
   }
 
   @Get(":id")
-  public findOne(@Param("id") id: number): Promise<User | null> {
-    return this.usersService.findOne(id);
+  public findOne(@Param("id") id: number): Promise<User> {
+    try {
+      return this.usersService.findOne(id);
+    } catch (error) {
+      throw new HttpException("NotFound", HttpStatus.NOT_FOUND);
+    }
   }
 
   @Put(":id")
   public update(@Param("id") id: number, @Body() user: Partial<User>): Promise<User | null> {
-    return this.usersService.update(id, user);
+    try {
+      return this.usersService.update(id, user);
+    } catch (error) {
+      throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+    }
   }
 
   @Delete(":id")
   public softDelete(@Param("id") id: number): Promise<void> {
-    return this.usersService.delete(id);
+    try {
+      return this.usersService.delete(id);
+    } catch (error) {
+      throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
@@ -18,11 +18,15 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  public findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+  public async findOne(id: number): Promise<User> {
+    const user = await this.usersRepository.findOneBy({ id });
+
+    if (!user) throw new HttpException("NotFound", HttpStatus.NOT_FOUND);
+
+    return user;
   }
 
-  public async update(id: number, user: Partial<User>): Promise<User | null> {
+  public async update(id: number, user: Partial<User>): Promise<User> {
     await this.usersRepository.update(id, user);
     return this.findOne(id);
   }
