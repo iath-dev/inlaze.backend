@@ -1,9 +1,20 @@
-import { Body, Controller, HttpException, HttpStatus, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Logger,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import type { User } from "../users/user.entity";
+import { JwtAuthGuard } from "./jwt-auth.guard";
 
 @Controller("auth")
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   public constructor(private readonly authService: AuthService) {}
 
   @Post("login")
@@ -26,6 +37,7 @@ export class AuthController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post("refresh")
   public async refresh(
     @Body() body: { refresh_token: string },
@@ -33,6 +45,7 @@ export class AuthController {
     try {
       return await this.authService.refresh(body.refresh_token);
     } catch (error) {
+      this.logger.error(error);
       throw new HttpException("Error", HttpStatus.BAD_REQUEST);
     }
   }
