@@ -27,6 +27,6 @@
     "useUnknownInCatchVariables": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "noImplicitOverride": true,
+    "noImplicitOverride": true
   }
 }
