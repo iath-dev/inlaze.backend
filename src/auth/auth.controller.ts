@@ -20,7 +20,7 @@ export class AuthController {
   @Post("login")
   public async login(
     @Body() body: { email: string; password: string },
-  ): Promise<{ access_token: string; refresh_token: string }> {
+  ): Promise<{ email: string; id: number; access_token: string; refresh_token: string }> {
     try {
       return await this.authService.login(body.email, body.password);
     } catch (error) {
@@ -29,9 +29,11 @@ export class AuthController {
   }
 
   @Post("register")
-  public async register(@Body() body: { email: string; password: string }): Promise<User> {
+  public async register(
+    @Body() body: { name: string; email: string; password: string },
+  ): Promise<User> {
     try {
-      return await this.authService.register(body.email, body.password);
+      return await this.authService.register(body.name, body.email, body.password);
     } catch (error) {
       throw new HttpException("Error", HttpStatus.BAD_REQUEST);
     }

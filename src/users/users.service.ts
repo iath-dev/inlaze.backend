@@ -8,9 +8,9 @@ import * as bcrypt from "bcryptjs";
 export class UsersService {
   public constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
-  public async create(email: string, password: string): Promise<User> {
+  public async create(email: string, password: string, name?: string): Promise<User> {
     const _password = await bcrypt.hash(password, 10);
-    const newUser = this.usersRepository.create({ email, password: _password });
+    const newUser = this.usersRepository.create({ email, password: _password, name });
     return this.usersRepository.save(newUser);
   }
 

@@ -33,19 +33,21 @@ export class AuthService {
   public async login(
     email: string,
     password: string,
-  ): Promise<{ access_token: string; refresh_token: string }> {
+  ): Promise<{ email: string; id: number; access_token: string; refresh_token: string }> {
     const user = await this.validateUser(email, password);
 
     if (!user) throw new HttpException("Error", HttpStatus.BAD_REQUEST);
 
     return {
+      id: user.id!,
+      email: user.email!,
       access_token: this.jwtService.sign(user),
       refresh_token: this.jwtService.sign(user, { expiresIn: "7d" }),
     };
   }
 
-  public async register(email: string, password: string): Promise<User> {
-    return this.userService.create(email, password);
+  public async register(name: string, email: string, password: string): Promise<User> {
+    return this.userService.create(email, password, name);
   }
 
   public async refresh(
