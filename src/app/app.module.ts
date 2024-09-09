@@ -1,12 +1,10 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UsersModule } from "../users/users.module";
 import { User } from "../users/user.entity";
 import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from "../auth/auth.module";
-import { Favorite } from "src/favorites/favorite.entity";
+import { Favorite } from "../favorites/favorite.entity";
 import { FavoritesModule } from "../favorites/favorites.module";
 
 @Module({
@@ -24,7 +22,7 @@ import { FavoritesModule } from "../favorites/favorites.module";
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

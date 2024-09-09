@@ -1,4 +1,4 @@
-import { Favorite } from "src/favorites/favorite.entity";
+import { Favorite } from "../favorites/favorite.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
