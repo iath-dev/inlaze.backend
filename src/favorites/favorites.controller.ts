@@ -1,11 +1,11 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
   HttpCode,
   HttpException,
   HttpStatus,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -28,10 +28,11 @@ export class FavoritesController {
     }
   }
 
-  @Post()
+  @HttpCode(200)
+  @Post(":itemId")
   public async addFavorites(
     @Request() req: AuthRequest,
-    @Body("itemId") itemId: number,
+    @Param("itemId") itemId: number,
   ): Promise<Favorite> {
     try {
       return await this.favoriteService.addFavorite(req.user.email!, itemId);
@@ -41,10 +42,10 @@ export class FavoritesController {
   }
 
   @HttpCode(200)
-  @Delete()
+  @Delete(":itemId")
   public async removeFavorites(
     @Request() req: AuthRequest,
-    @Body("itemId") itemId: number,
+    @Param("itemId") itemId: number,
   ): Promise<void> {
     try {
       await this.favoriteService.removeFavorite(req.user.email!, itemId);
