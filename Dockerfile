@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instala las dependencias (incluye devDependencies para el build)
-RUN npm install
+RUN npm install --only=production
 
 # Copia todo el código de la aplicación
 COPY . .
@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Comando para correr la aplicación
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "start"]
