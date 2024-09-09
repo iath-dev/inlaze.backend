@@ -11,7 +11,7 @@ import { FavoritesModule } from "../favorites/favorites.module";
   imports: [
     TypeOrmModule.forRoot({
       type: "sqlite",
-      database: "db.sqlite",
+      database: "../data/db.sqlite",
       entities: [User, Favorite],
       synchronize: true,
     }),
