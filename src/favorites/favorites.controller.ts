@@ -23,7 +23,7 @@ export class FavoritesController {
 
   @Get()
   @HttpCode(200)
-  @ApiBearerAuth("JWT Token")
+  @ApiBearerAuth()
   @ApiOperation({ summary: "Obtener favoritos" })
   @ApiResponse({ status: 200, description: "Lista de favoritos" })
   @ApiResponse({ status: 400, description: "Error obteniendo los favoritos" })
@@ -37,7 +37,7 @@ export class FavoritesController {
 
   @HttpCode(200)
   @Post(":itemId")
-  @ApiBearerAuth("JWT Token")
+  @ApiBearerAuth()
   @ApiOperation({ summary: "Agregar un nuevo favorito" })
   @ApiResponse({ status: 200, description: "Favorito agregado correctamente" })
   @ApiResponse({ status: 400, description: "Error registrando favorito" })
@@ -55,7 +55,7 @@ export class FavoritesController {
   @HttpCode(200)
   @Delete(":itemId")
   @HttpCode(200)
-  @ApiBearerAuth("JWT Token")
+  @ApiBearerAuth()
   @ApiOperation({ summary: "Eliminar un favorito" })
   @ApiResponse({ status: 200, description: "Favorito eliminado correctamente" })
   @ApiResponse({ status: 400, description: "Error eliminado favorito" })

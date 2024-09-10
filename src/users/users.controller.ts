@@ -13,6 +13,8 @@ import {
 import { UsersService } from "./users.service";
 import type { User } from "./user.entity";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @ApiTags("Users")
 @Controller("users")
@@ -24,9 +26,9 @@ export class UsersController {
   @ApiOperation({ summary: "Crear un nuevo usuario" })
   @ApiResponse({ status: 200, description: "Usuario creado correctamente" })
   @ApiResponse({ status: 400, description: "Error creando usuario" })
-  public create(@Body() user: { email: string; password: string }): Promise<User> {
+  public create(@Body() user: CreateUserDto): Promise<User> {
     try {
-      return this.usersService.create(user.email, user.password);
+      return this.usersService.create(user.email, user.password, user.name);
     } catch (error) {
       throw new HttpException("Forbidden", HttpStatus.FORBIDDEN);
     }
@@ -63,7 +65,7 @@ export class UsersController {
   @ApiOperation({ summary: "Actualizar un Usuario" })
   @ApiResponse({ status: 200, description: "Usuario actualizado" })
   @ApiResponse({ status: 400, description: "Error actualizando usuario usuario" })
-  public update(@Param("id") id: number, @Body() user: Partial<User>): Promise<User | null> {
+  public update(@Param("id") id: number, @Body() user: UpdateUserDto): Promise<User | null> {
     try {
       return this.usersService.update(id, user);
     } catch (error) {
