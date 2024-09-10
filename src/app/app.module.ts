@@ -7,6 +7,7 @@ import { AuthModule } from "../auth/auth.module";
 import { FavoritesModule } from "../favorites/favorites.module";
 import { User } from "../users/user.entity";
 import { Favorite } from "../favorites/favorite.entity";
+import { AppController } from "./app.controller";
 
 @Module({
   imports: [
@@ -23,17 +24,11 @@ import { Favorite } from "../favorites/favorite.entity";
         synchronize: true,
       }),
     }),
-    // TypeOrmModule.forRoot({
-    //   type: "sqlite",
-    //   database: "../data/db.sqlite",
-    //   entities: [User, Favorite],
-    //   synchronize: true,
-    // }),
     UsersModule,
     AuthModule,
     FavoritesModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
